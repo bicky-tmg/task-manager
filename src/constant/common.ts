@@ -18,3 +18,10 @@ export const SORT_FIELD_LABELS: Record<SortField, string> = {
     priority: "Priority",
     createdAt: "Created Date",
 };
+
+export const priorityWeight = {
+    low: 1,
+    medium: 2,
+    high: 3,
+    critical: 4,
+};

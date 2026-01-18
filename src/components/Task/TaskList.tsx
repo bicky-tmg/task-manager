@@ -1,12 +1,20 @@
+import { useMemo } from "react";
 import { TaskItem } from "./TaskItem";
 import { useTaskStore } from "@/store/taskStore";
+import { getFilteredTasks } from "@/lib/utils";
+import { useFilterStore } from "@/store/filterStore";
 
 interface TaskListProps {
   setIsFormModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const TaskList = ({ setIsFormModalOpen }: TaskListProps) => {
-  const tasks = useTaskStore((state) => state.tasks);
+  const allTasks = useTaskStore((state) => state.tasks);
+  const filters = useFilterStore((state) => state.filters);
+  const tasks = useMemo(
+    () => getFilteredTasks(allTasks, filters),
+    [allTasks, filters],
+  );
   return (
     <div className="space-y-3">
       {tasks.map((task) => (

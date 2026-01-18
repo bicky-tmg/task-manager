@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { format, isBefore, startOfDay } from "date-fns";
 import { Calendar, Edit2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Task } from "@/types/task";
+import type { Task } from "@/types/common";
 import { cn } from "@/lib/utils";
 import { PriorityBadge } from "../PriorityBadge";
 import { StatusBadge } from "../StatusBadge";

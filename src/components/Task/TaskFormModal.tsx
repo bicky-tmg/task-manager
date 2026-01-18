@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { taskFormSchema, type TaskFormData } from "@/validation/task";
-import type { TaskPriority, TaskStatus } from "@/types/task";
+import type { TaskPriority, TaskStatus } from "@/types/common";
 import { PRIORITY_LABELS, STATUS_LABELS } from "@/constant/common";
 import { useTaskStore } from "@/store/taskStore";
 
