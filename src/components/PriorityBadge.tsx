@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import type { TaskPriority } from "@/types/task";
+import type { TaskPriority } from "@/types/common";
 import { cn } from "@/lib/utils";
 import { PRIORITY_LABELS } from "@/constant/common";
 

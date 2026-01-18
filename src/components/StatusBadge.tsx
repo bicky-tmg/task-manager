@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { Circle, Clock, CheckCircle2 } from "lucide-react";
-import type { TaskStatus } from "@/types/task";
+import type { TaskStatus } from "@/types/common";
 import { cn } from "@/lib/utils";
 import { STATUS_LABELS } from "@/constant/common";
 

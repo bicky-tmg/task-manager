@@ -153,41 +153,45 @@
   }
 }
 
-@layer components {
-  .priority-critical {
-    background-color: var(--priority-critical);
-    color: var(--color-white);
-  }
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
 
-  .priority-high {
-    background-color: var(--priority-high);
-    color: var(--color-white);
-  }
+@utility priority-critical {
+  background-color: var(--priority-critical);
+  color: var(--color-white);
+}
 
-  .priority-medium {
-    background-color: var(--priority-medium);
-    color: var(--color-white);
-  }
+@utility priority-high {
+  background-color: var(--priority-high);
+  color: var(--color-white);
+}
 
-  .priority-low {
-    background-color: var(--priority-low);
-    color: var(--color-white);
-  }
+@utility priority-medium {
+  background-color: var(--priority-medium);
+  color: var(--color-white);
+}
+@utility priority-low {
+  background-color: var(--priority-low);
+  color: var(--color-white);
+}
+@utility status-todo {
+  color: var(--status-todo);
+}
+@utility status-in-progress {
+  color: var(--status-in-progress);
+}
+@utility status-completed {
+  color: var(--status-completed);
+}
 
-  .status-todo {
-    color: var(--status-todo);
+@utility scrollbar-hidden {
+  &::-webkit-scrollbar {
+    display: none;
   }
+}
 
-  .status-in-progress {
-    color: var(--status-in-progress);
-  }
-
-  .status-completed {
-    color: var(--status-completed);
-  }
-
-  .glass {
-    /* background-color: var(--color-card); */
-    @apply bg-card/80 backdrop-blur-xl;
-  }
+@utility glass {
+  @apply bg-card/80 backdrop-blur-xl;
 }
