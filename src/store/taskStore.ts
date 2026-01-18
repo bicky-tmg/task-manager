@@ -1,4 +1,4 @@
-import type { Task } from '@/types/task'
+import type { Task } from '@/types/common'
 import type { TaskFormData } from '@/validation/task';
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
@@ -33,7 +33,7 @@ export const useTaskStore = create<TaskStore>()(
                 return { tasks }
             })
         },
-        updateTask: (id, data): void => {
+        updateTask: (id, data) => {
             set((state) => {
                 const tasks = state.tasks.map((task) =>
                     task.id === id
@@ -43,10 +43,11 @@ export const useTaskStore = create<TaskStore>()(
                 return { tasks };
             });
         },
-        deleteTask: (id: string): void => {
+        deleteTask: (id) => {
             set((state) => {
                 const tasks = state.tasks.filter((task) => task.id !== id);
                 return { tasks };
             });
         },
+
     }), { name: 'tasks-storage', partialize: (state) => ({ tasks: state.tasks }) }))
