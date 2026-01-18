@@ -3,6 +3,10 @@ export type TaskPriority = 'low' | 'medium' | 'high' | 'critical';
 export type SortField = "dueDate" | "priority" | "createdAt";
 export type SortOrder = "asc" | "desc";
 export type FilterTaskStatus = TaskStatus | "all";
+export type SelectOption = {
+    value: string;
+    label: string;
+};
 
 export type Task = {
     id: string;
