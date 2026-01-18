@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -39,11 +39,11 @@ import { cn } from "@/lib/utils";
 import { taskFormSchema, type TaskFormData } from "@/validation/task";
 import type { TaskPriority, TaskStatus } from "@/types/task";
 import { PRIORITY_LABELS, STATUS_LABELS } from "@/constant/common";
+import { useTaskStore } from "@/store/taskStore";
 
 interface TaskFormModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: TaskFormData) => void;
 }
 
 const initialValues: TaskFormData = {
@@ -54,20 +54,46 @@ const initialValues: TaskFormData = {
   dueDate: new Date().toISOString(),
 };
 
-export const TaskFormModal = ({
-  open,
-  onOpenChange,
-  onSubmit,
-}: TaskFormModalProps) => {
+export const TaskFormModal = ({ open, onOpenChange }: TaskFormModalProps) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const addTask = useTaskStore((state) => state.addTask);
+  const updateTask = useTaskStore((state) => state.updateTask);
+  const task = useTaskStore((state) => state.editingTask);
+  const isEditing = !!task;
 
   const form = useForm<TaskFormData>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: initialValues,
   });
 
-  const handleSubmit = (values: TaskFormData) => {
-    onSubmit(values);
+  useEffect(() => {
+    if (open) {
+      if (task) {
+        form.reset({
+          title: task.title,
+          description: task.description,
+          status: task.status,
+          priority: task.priority,
+          dueDate: task.dueDate,
+        });
+      } else {
+        form.reset({
+          title: "",
+          description: "",
+          status: "todo",
+          priority: "medium",
+          dueDate: new Date().toISOString(),
+        });
+      }
+    }
+  }, [open, task, form]);
+
+  const handleSubmit = (data: TaskFormData) => {
+    if (isEditing) {
+      updateTask(task.id, data);
+    } else {
+      addTask(data);
+    }
     onOpenChange(false);
     form.reset();
   };
@@ -76,9 +102,13 @@ export const TaskFormModal = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-125">
         <DialogHeader>
-          <DialogTitle>Create New Task</DialogTitle>
+          <DialogTitle>
+            {isEditing ? "Edit Task" : "Create New Task"}
+          </DialogTitle>
           <DialogDescription>
-            Fill in the details to create a new task.
+            {isEditing
+              ? "Update the task details below."
+              : "Fill in the details to create a new task."}
           </DialogDescription>
         </DialogHeader>
 
@@ -241,7 +271,9 @@ export const TaskFormModal = ({
               >
                 Cancel
               </Button>
-              <Button type="submit">Create Task</Button>
+              <Button type="submit">
+                {isEditing ? "Save Changes" : "Create Task"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

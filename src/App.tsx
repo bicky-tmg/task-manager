@@ -1,42 +1,33 @@
 import { Plus } from "lucide-react";
 import { Button } from "./components/ui/button";
-import { TaskFormModal } from "./components/TaskFormModal";
+import { TaskFormModal } from "./components/Task/TaskFormModal";
 import { useState } from "react";
 import { useTaskStore } from "./store/taskStore";
-import type { TaskFormData } from "./validation/task";
+import { TaskList } from "./components/Task/TaskList";
 
 function App() {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-  const tasks = useTaskStore((state) => state.tasks);
-  const addTask = useTaskStore((state) => state.addTask);
+  const setEditingTask = useTaskStore((state) => state.setEditingTask);
 
   const handleAddTask = () => {
+    setEditingTask(null);
     setIsFormModalOpen(true);
   };
 
-  const handleFormSubmit = (data: TaskFormData) => {
-    addTask(data);
-  };
-
   return (
-    <>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id} onClick={() => console.log(task.id)}>
-            {task.title}
-          </li>
-        ))}
-      </ul>
-      <Button onClick={handleAddTask} className="gap-2">
-        <Plus className="h-4 w-4" />
-        <span className="hidden sm:inline">Add Task</span>
-      </Button>
-      <TaskFormModal
-        open={isFormModalOpen}
-        onOpenChange={setIsFormModalOpen}
-        onSubmit={handleFormSubmit}
-      />
-    </>
+    <div className="flex min-h-screen flex-col bg-background">
+      <div className="container px-4 py-6 sm:px-6">
+        <Button onClick={handleAddTask} className="gap-2">
+          <Plus className="h-4 w-4" />
+          <span className="hidden sm:inline">Add Task</span>
+        </Button>
+        <TaskList setIsFormModalOpen={setIsFormModalOpen} />
+        <TaskFormModal
+          open={isFormModalOpen}
+          onOpenChange={setIsFormModalOpen}
+        />
+      </div>
+    </div>
   );
 }
 
