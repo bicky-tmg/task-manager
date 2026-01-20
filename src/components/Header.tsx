@@ -1,6 +1,7 @@
 import { Plus, CheckSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useFilterActions } from "@/hooks/useFilterActions";
+import { ModeToggle } from "./ModeToggle";
 
 interface HeaderProps {
   onAddTask: () => void;
@@ -24,11 +25,13 @@ export const Header = ({ onAddTask }: HeaderProps) => {
             </p>
           </div>
         </div>
-
-        <Button onClick={onAddTask} className="gap-2">
-          <Plus className="h-4 w-4" />
-          <span className="hidden sm:inline">Add Task</span>
-        </Button>
+        <div className="flex items-center justify-center gap-2">
+          <ModeToggle />
+          <Button onClick={onAddTask} className="gap-2">
+            <Plus className="h-4 w-4" />
+            <span className="hidden sm:inline">Add Task</span>
+          </Button>
+        </div>
       </div>
     </header>
   );
