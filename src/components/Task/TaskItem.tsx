@@ -71,7 +71,7 @@ export const TaskItem = ({ task, className }: TaskItemProps) => {
               {task.title}
             </h3>
 
-            <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+            <div className="flex items-center gap-1 opacity-0 [@media(hover:none)]:opacity-100 transition-opacity group-hover:opacity-100">
               <Button
                 variant="ghost"
                 size="icon"
@@ -94,12 +94,12 @@ export const TaskItem = ({ task, className }: TaskItemProps) => {
           </div>
 
           {task.description && (
-            <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+            <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
               {task.description}
             </p>
           )}
 
-          <div className="mt-3 flex flex-wrap items-center gap-2">
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <StatusBadge status={task.status} size="sm" />
             <PriorityBadge priority={task.priority} size="sm" />
 

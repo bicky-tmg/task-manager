@@ -4,6 +4,7 @@ import { useTaskStore } from "./store/taskStore";
 import { Header } from "./components/Header";
 import { FilterControls } from "./components/Filters/FilterControls";
 import { KanbanBoard } from "./components/Kanban/KanbanBoard";
+import { TaskStats } from "./components/Task/TaskStats";
 
 function App() {
   const setIsFormModalOpen = useTaskStore((state) => state.setIsFormModalOpen);
@@ -18,6 +19,10 @@ function App() {
     <div className="flex min-h-screen flex-col bg-background">
       <Header onAddTask={handleAddTask} />
       <div className="container px-4 py-6 sm:px-6">
+        <section className="mb-6">
+          <TaskStats />
+        </section>
+
         <section className="mb-6">
           <FilterControls />
         </section>

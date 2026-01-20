@@ -72,7 +72,10 @@ export const KanbanColumn = ({
       </div>
 
       <div className="flex-1 min-h-50">
-        <div ref={scrollRef} className="h-[calc(100vh-200px)] overflow-y-auto">
+        <div
+          ref={scrollRef}
+          className="h-[calc(100vh-200px)] overflow-y-auto scrollbar-hidden"
+        >
           <div
             className="relative w-full"
             style={{ height: `${virtualizer.getTotalSize()}px` }}

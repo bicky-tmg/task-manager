@@ -1,11 +1,13 @@
 import { Plus, CheckSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useFilterActions } from "@/hooks/useFilterActions";
 
 interface HeaderProps {
   onAddTask: () => void;
 }
 
 export const Header = ({ onAddTask }: HeaderProps) => {
+  const { counts } = useFilterActions();
   return (
     <header className="border-b bg-card">
       <div className="container flex h-16 items-center justify-between gap-4 px-4 sm:px-6">
@@ -17,6 +19,9 @@ export const Header = ({ onAddTask }: HeaderProps) => {
             <h1 className="text-lg font-semibold text-foreground">
               Task Manager
             </h1>
+            <p className="text-xs text-muted-foreground">
+              {counts.all} tasks • {counts.completed} completed
+            </p>
           </div>
         </div>
 
