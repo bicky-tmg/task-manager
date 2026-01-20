@@ -11,12 +11,13 @@ import { useTaskStore } from "@/store/taskStore";
 
 interface TaskItemProps {
   task: Task;
-  setIsFormModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: string;
 }
 
 const now = () => Date.now();
 
-export const TaskItem = ({ task, setIsFormModalOpen }: TaskItemProps) => {
+export const TaskItem = ({ task, className }: TaskItemProps) => {
+  const setIsFormModalOpen = useTaskStore((state) => state.setIsFormModalOpen);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const deleteTask = useTaskStore((state) => state.deleteTask);
   const setEditingTask = useTaskStore((state) => state.setEditingTask);
@@ -54,6 +55,7 @@ export const TaskItem = ({ task, setIsFormModalOpen }: TaskItemProps) => {
       className={cn(
         "group rounded-lg border bg-card p-3 shadow-sm transition-all hover:shadow-md",
         task.status === "completed" && "opacity-75",
+        className,
       )}
     >
       <div className="flex items-start gap-2">

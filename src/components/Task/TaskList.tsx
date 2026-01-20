@@ -4,11 +4,7 @@ import { useTaskStore } from "@/store/taskStore";
 import { getFilteredTasks } from "@/lib/utils";
 import { useFilterStore } from "@/store/filterStore";
 
-interface TaskListProps {
-  setIsFormModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const TaskList = ({ setIsFormModalOpen }: TaskListProps) => {
+export const TaskList = () => {
   const allTasks = useTaskStore((state) => state.tasks);
   const filters = useFilterStore((state) => state.filters);
   const tasks = useMemo(
@@ -18,11 +14,7 @@ export const TaskList = ({ setIsFormModalOpen }: TaskListProps) => {
   return (
     <div className="space-y-3">
       {tasks.map((task) => (
-        <TaskItem
-          key={task.id}
-          task={task}
-          setIsFormModalOpen={setIsFormModalOpen}
-        />
+        <TaskItem key={task.id} task={task} />
       ))}
     </div>
   );

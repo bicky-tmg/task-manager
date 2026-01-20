@@ -7,6 +7,8 @@ type TaskStore = {
     tasks: Task[];
     editingTask: Task | null;
     setEditingTask: (next: Task | null | ((prev: Task | null) => Task | null)) => void;
+    isFormModalOpen: boolean;
+    setIsFormModalOpen: (next: boolean | ((prev: boolean) => boolean)) => void;
     addTask: (data: TaskFormData) => void;
     updateTask: (id: string, data: Partial<TaskFormData>) => void;
     deleteTask: (id: string) => void;
@@ -15,6 +17,8 @@ type TaskStore = {
 export const useTaskStore = create<TaskStore>()(
     persist((set, get) => ({
         tasks: [],
+        isFormModalOpen: false,
+        setIsFormModalOpen: (next) => set((state) => ({ isFormModalOpen: typeof next === "function" ? next(state.isFormModalOpen) : next })),
         editingTask: null,
         setEditingTask: (next) => set((state) => ({ editingTask: typeof next === "function" ? next(state.editingTask) : next })),
         addTask: (data) => {

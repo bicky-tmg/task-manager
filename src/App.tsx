@@ -1,18 +1,18 @@
 import { TaskFormModal } from "./components/Task/TaskFormModal";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useTaskStore } from "./store/taskStore";
-import { TaskList } from "./components/Task/TaskList";
 import { Header } from "./components/Header";
 import { FilterControls } from "./components/Filters/FilterControls";
+import { KanbanBoard } from "./components/Kanban/KanbanBoard";
 
 function App() {
-  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const setIsFormModalOpen = useTaskStore((state) => state.setIsFormModalOpen);
   const setEditingTask = useTaskStore((state) => state.setEditingTask);
 
   const handleAddTask = useCallback(() => {
     setEditingTask(null);
     setIsFormModalOpen(true);
-  }, [setEditingTask]);
+  }, [setEditingTask, setIsFormModalOpen]);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -21,11 +21,8 @@ function App() {
         <section className="mb-6">
           <FilterControls />
         </section>
-        <TaskList setIsFormModalOpen={setIsFormModalOpen} />
-        <TaskFormModal
-          open={isFormModalOpen}
-          onOpenChange={setIsFormModalOpen}
-        />
+        <KanbanBoard onAddTask={handleAddTask} />
+        <TaskFormModal />
       </div>
     </div>
   );

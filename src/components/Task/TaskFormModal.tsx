@@ -19,11 +19,6 @@ import { FormTextarea } from "./FormTextarea";
 import { FormSelect } from "./FormSelect";
 import { FormDatePicker } from "./FormDatePicker";
 
-interface TaskFormModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
 const initialValues: TaskFormData = {
   title: "",
   description: "",
@@ -44,7 +39,9 @@ const priorityOptions = Object.entries(PRIORITY_LABELS).map(
   }),
 );
 
-export const TaskFormModal = ({ open, onOpenChange }: TaskFormModalProps) => {
+export const TaskFormModal = () => {
+  const open = useTaskStore((state) => state.isFormModalOpen);
+  const onOpenChange = useTaskStore((state) => state.setIsFormModalOpen);
   const addTask = useTaskStore((state) => state.addTask);
   const updateTask = useTaskStore((state) => state.updateTask);
   const task = useTaskStore((state) => state.editingTask);
