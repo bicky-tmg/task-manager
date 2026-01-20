@@ -2,6 +2,7 @@ import type { Task } from '@/types/common'
 import type { TaskFormData } from '@/validation/task';
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { v4 as uuidv4 } from "uuid";
 
 type TaskStore = {
     tasks: Task[];
@@ -15,7 +16,7 @@ type TaskStore = {
 }
 
 export const useTaskStore = create<TaskStore>()(
-    persist((set, get) => ({
+    persist((set) => ({
         tasks: [],
         isFormModalOpen: false,
         setIsFormModalOpen: (next) => set((state) => ({ isFormModalOpen: typeof next === "function" ? next(state.isFormModalOpen) : next })),
@@ -23,11 +24,9 @@ export const useTaskStore = create<TaskStore>()(
         setEditingTask: (next) => set((state) => ({ editingTask: typeof next === "function" ? next(state.editingTask) : next })),
         addTask: (data) => {
             const now = new Date().toISOString();
-            const tasks = get().tasks
-            const lastIdNumber = Number(tasks[tasks.length - 1]?.id?.split("-")?.[1])
-            const newId = isNaN(lastIdNumber) ? "TM-1" : `TM-${lastIdNumber + 1}`
+
             const newTask: Task = {
-                id: newId,
+                id: uuidv4(),
                 ...data,
                 createdAt: now,
                 updatedAt: now,

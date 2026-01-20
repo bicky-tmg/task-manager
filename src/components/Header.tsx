@@ -1,7 +1,8 @@
-import { Plus, CheckSquare } from "lucide-react";
+import { Plus, CheckSquare, Bug } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useFilterActions } from "@/hooks/useFilterActions";
 import { ModeToggle } from "./ModeToggle";
+import { useState } from "react";
 
 interface HeaderProps {
   onAddTask: () => void;
@@ -9,6 +10,12 @@ interface HeaderProps {
 
 export const Header = ({ onAddTask }: HeaderProps) => {
   const { counts } = useFilterActions();
+  const [shouldThrow, setShouldThrow] = useState(false);
+
+  if (shouldThrow) {
+    throw new Error("Intentional error to showcase Error Boundary");
+  }
+
   return (
     <header className="border-b bg-card">
       <div className="container flex h-16 items-center justify-between gap-4 px-4 sm:px-6">
@@ -26,6 +33,16 @@ export const Header = ({ onAddTask }: HeaderProps) => {
           </div>
         </div>
         <div className="flex items-center justify-center gap-2">
+          <Button
+            variant="destructive"
+            aria-label="Trigger error boundary"
+            onClick={() => {
+              setShouldThrow(true);
+            }}
+          >
+            <Bug className="h-4 w-4" />
+            Trigger Error
+          </Button>
           <ModeToggle />
           <Button onClick={onAddTask} className="gap-2">
             <Plus className="h-4 w-4" />

@@ -8,6 +8,7 @@ import { PriorityBadge } from "../PriorityBadge";
 import { StatusBadge } from "../StatusBadge";
 import { DeleteConfirmModal } from "../DeleteConfirmModal";
 import { useTaskStore } from "@/store/taskStore";
+import { toast } from "sonner";
 
 interface TaskItemProps {
   task: Task;
@@ -24,6 +25,7 @@ export const TaskItem = ({ task, className }: TaskItemProps) => {
 
   const handleDelete = useCallback(() => {
     deleteTask(task.id);
+    toast.success("Task has been deleted");
   }, [task.id, deleteTask]);
 
   const handleEdit = useCallback(() => {

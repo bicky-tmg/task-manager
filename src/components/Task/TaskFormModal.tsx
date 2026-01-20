@@ -18,6 +18,7 @@ import { FormInput } from "./FormInput";
 import { FormTextarea } from "./FormTextarea";
 import { FormSelect } from "./FormSelect";
 import { FormDatePicker } from "./FormDatePicker";
+import { toast } from "sonner";
 
 const initialValues: TaskFormData = {
   title: "",
@@ -74,11 +75,13 @@ export const TaskFormModal = () => {
     }
   }, [open, task, form]);
 
-  const handleSubmit = (data: TaskFormData) => {
+  const onSubmit = (data: TaskFormData) => {
     if (isEditing) {
       updateTask(task.id, data);
+      toast.success("Task has been updated");
     } else {
       addTask(data);
+      toast.success("Task has been created");
     }
     onOpenChange(false);
     form.reset();
@@ -99,10 +102,7 @@ export const TaskFormModal = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className="space-y-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormInput
               name="title"
               label="Title"
