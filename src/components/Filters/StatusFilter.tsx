@@ -1,26 +1,20 @@
 import { STATUS_LABELS } from "@/constant/common";
-import { getTaskCounts } from "@/lib/utils";
-import { useFilterStore } from "@/store/filterStore";
-import { useTaskStore } from "@/store/taskStore";
-import { useMemo } from "react";
+import { useFilterActions } from "@/hooks/useFilterActions";
 
 export const StatusFilter = () => {
-  const allTasks = useTaskStore((state) => state.tasks);
-  const filters = useFilterStore((state) => state.filters);
-  const setStatusFilter = useFilterStore((state) => state.setStatusFilter);
+  const { counts, status, setStatusFilter } = useFilterActions();
 
-  const counts = useMemo(() => getTaskCounts(allTasks), [allTasks]);
   return (
     <div className="flex flex-wrap gap-2">
-      {(["all", "todo", "in-progress", "completed"] as const).map((status) => {
-        const label = status === "all" ? "All" : STATUS_LABELS[status];
-        const count = counts[status];
-        const isActive = filters.status === status;
+      {(["all", "todo", "in-progress", "completed"] as const).map((_status) => {
+        const label = _status === "all" ? "All" : STATUS_LABELS[_status];
+        const count = counts[_status];
+        const isActive = status === _status;
 
         return (
           <button
-            key={status}
-            onClick={() => setStatusFilter(status)}
+            key={_status}
+            onClick={() => setStatusFilter(_status)}
             className={`
                   inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors focus-ring
                   ${

@@ -1,12 +1,12 @@
 import { Search } from "lucide-react";
 import { Input } from "../ui/input";
-import { useFilterStore } from "@/store/filterStore";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useEffect, useState } from "react";
+import { useFilterActions } from "@/hooks/useFilterActions";
 
 export const SearchFilter = () => {
   const [search, setSearch] = useState("");
-  const setSearchQuery = useFilterStore((state) => state.setSearchQuery);
+  const { setSearchQuery } = useFilterActions();
   const debouncedSearch = useDebounce(search, 500);
 
   useEffect(() => {
