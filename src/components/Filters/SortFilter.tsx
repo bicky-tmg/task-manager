@@ -10,18 +10,25 @@ import {
 import { Button } from "../ui/button";
 import { ArrowDown, ArrowUp, ArrowUpDown, RotateCcw } from "lucide-react";
 import { SORT_FIELD_LABELS } from "@/constant/common";
-import type { SortField } from "@/types/common";
-import { useFilterActions } from "@/hooks/useFilterActions";
+import type { SortField, SortOrder } from "@/types/common";
 
-export const SortFilter = () => {
-  const {
-    sortField,
-    sortOrder,
-    setSortField,
-    toggleSortOrder,
-    resetFilters,
-    hasFiltersApplied,
-  } = useFilterActions();
+interface SortFilterProps {
+  sortField: SortField;
+  sortOrder: SortOrder;
+  onSortFieldChange: (field: SortField) => void;
+  toggleSortOrder: () => void;
+  resetFilters: () => void;
+  hasFiltersApplied: boolean;
+}
+
+export const SortFilter = ({
+  sortField,
+  sortOrder,
+  onSortFieldChange,
+  toggleSortOrder,
+  resetFilters,
+  hasFiltersApplied,
+}: SortFilterProps) => {
   const SortOrderIcon = sortOrder === "asc" ? ArrowUp : ArrowDown;
 
   return (
@@ -40,7 +47,7 @@ export const SortFilter = () => {
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup
             value={sortField}
-            onValueChange={(value) => setSortField(value as SortField)}
+            onValueChange={(value) => onSortFieldChange(value as SortField)}
           >
             {Object.entries(SORT_FIELD_LABELS).map(([value, label]) => (
               <DropdownMenuRadioItem key={value} value={value}>

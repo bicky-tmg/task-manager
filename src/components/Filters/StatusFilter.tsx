@@ -1,9 +1,17 @@
 import { STATUS_LABELS } from "@/constant/common";
-import { useFilterActions } from "@/hooks/useFilterActions";
+import type { Count, FilterTaskStatus } from "@/types/common";
 
-export const StatusFilter = () => {
-  const { counts, status, setStatusFilter } = useFilterActions();
+interface StatusFilterProps {
+  counts: Count;
+  status: FilterTaskStatus;
+  onStatusChange: (status: FilterTaskStatus) => void;
+}
 
+export const StatusFilter = ({
+  counts,
+  status,
+  onStatusChange,
+}: StatusFilterProps) => {
   return (
     <div className="flex flex-wrap gap-2">
       {(["all", "todo", "in-progress", "completed"] as const).map((_status) => {
@@ -14,7 +22,7 @@ export const StatusFilter = () => {
         return (
           <button
             key={_status}
-            onClick={() => setStatusFilter(_status)}
+            onClick={() => onStatusChange(_status)}
             className={`
                   inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors focus-ring
                   ${
