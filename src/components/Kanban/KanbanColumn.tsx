@@ -11,6 +11,8 @@ interface KanbanColumnProps {
   status: TaskStatus;
   tasks: Task[];
   onAddTask?: () => void;
+  onEdit: (task: Task) => void;
+  onDeleteOpen: (task: Task, open: boolean) => void;
 }
 
 const statusColors = {
@@ -29,6 +31,8 @@ export const KanbanColumn = ({
   status,
   tasks,
   onAddTask,
+  onEdit,
+  onDeleteOpen,
 }: KanbanColumnProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtualizer({
@@ -95,7 +99,13 @@ export const KanbanColumn = ({
                     ref={virtualizer.measureElement}
                     className="m-2"
                   >
-                    <TaskItem key={task.id} task={task} className="w-full" />
+                    <TaskItem
+                      key={task.id}
+                      task={task}
+                      onDeleteOpen={onDeleteOpen}
+                      onEdit={onEdit}
+                      className="w-full"
+                    />
                   </div>
                 );
               })}

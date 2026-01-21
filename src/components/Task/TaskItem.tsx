@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { format, isBefore, startOfDay } from "date-fns";
 import { Calendar, Edit2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,33 +6,22 @@ import type { Task } from "@/types/common";
 import { cn } from "@/lib/utils";
 import { PriorityBadge } from "../PriorityBadge";
 import { StatusBadge } from "../StatusBadge";
-import { DeleteConfirmModal } from "../DeleteConfirmModal";
-import { useTaskStore } from "@/store/taskStore";
-import { toast } from "sonner";
 
 interface TaskItemProps {
   task: Task;
   className?: string;
+  onEdit: (task: Task) => void;
+  onDeleteOpen: (task: Task, open: boolean) => void;
 }
 
 const now = () => Date.now();
 
-export const TaskItem = ({ task, className }: TaskItemProps) => {
-  const setIsFormModalOpen = useTaskStore((state) => state.setIsFormModalOpen);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const deleteTask = useTaskStore((state) => state.deleteTask);
-  const setEditingTask = useTaskStore((state) => state.setEditingTask);
-
-  const handleDelete = useCallback(() => {
-    deleteTask(task.id);
-    toast.success("Task has been deleted");
-  }, [task.id, deleteTask]);
-
-  const handleEdit = useCallback(() => {
-    setEditingTask(task);
-    setIsFormModalOpen(true);
-  }, [setEditingTask, setIsFormModalOpen, task]);
-
+export const TaskItem = ({
+  task,
+  className,
+  onEdit,
+  onDeleteOpen,
+}: TaskItemProps) => {
   const isOverdue = useMemo(
     () =>
       task.status !== "completed" &&
@@ -78,7 +67,7 @@ export const TaskItem = ({ task, className }: TaskItemProps) => {
                 variant="ghost"
                 size="icon"
                 className="h-7 w-7"
-                onClick={handleEdit}
+                onClick={() => onEdit(task)}
                 aria-label="Edit task"
               >
                 <Edit2 className="h-3.5 w-3.5" />
@@ -87,7 +76,7 @@ export const TaskItem = ({ task, className }: TaskItemProps) => {
                 variant="ghost"
                 size="icon"
                 className="h-7 w-7 text-destructive hover:text-destructive"
-                onClick={() => setShowDeleteModal(true)}
+                onClick={() => onDeleteOpen(task, true)}
                 aria-label="Delete task"
               >
                 <Trash2 className="h-3.5 w-3.5" />
@@ -122,12 +111,6 @@ export const TaskItem = ({ task, className }: TaskItemProps) => {
           </div>
         </div>
       </div>
-      <DeleteConfirmModal
-        open={showDeleteModal}
-        onOpenChange={setShowDeleteModal}
-        taskTitle={task.title}
-        onConfirm={handleDelete}
-      />
     </div>
   );
 };
