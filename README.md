@@ -4,6 +4,12 @@
 
 The **Task Manager** is a modern, client-side web application built with **React**, **TypeScript**, and **Vite**. It allows users to efficiently create, manage, filter, and organize tasks while emphasizing performance, maintainability, and accessibility through a modular architecture and modern frontend tooling.
 
+## Live Preview
+
+Deployed Application:
+
+- https://task-manager-mu-one-78.vercel.app/
+
 ### Main Features
 
 - Create, update, and delete tasks
