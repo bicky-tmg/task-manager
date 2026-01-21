@@ -41,7 +41,7 @@ self.onmessage = (event) => {
             ) {
                 self.postMessage({
                     type: "error",
-                    message: "Invalid CSV format or data",
+                    message: "Invalid CSV data: Title is required.",
                 })
                 parser.abort()
                 return
