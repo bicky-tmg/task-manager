@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import type { Task } from "@/types/common";
 import { Alert, AlertDescription } from "./ui/alert";
 import { DownloadTasksCSV } from "./DownloadCsv";
+import { sampleTasksData } from "@/constant/common";
 
 interface BulkUploadModalProps {
   open: boolean;
@@ -91,6 +92,7 @@ export const BulkUploadModal = ({
           className="self-start"
           label="Download Sample"
           fileName="Sample"
+          tasks={sampleTasksData}
         />
 
         {error && (
