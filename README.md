@@ -22,6 +22,40 @@ Deployed Application:
 - Fast development and optimized builds via Vite
 - Accessible UI components using Radix UI
 
+## Virtualization
+
+### Kanban Column Virtualization
+
+To improve performance when rendering large numbers of tasks, **list virtualization** is implemented in the `KanbanColumn` component using **`@tanstack/react-virtual`**.
+
+#### Why Virtualization Was Added
+
+- Prevents performance degradation when handling many tasks
+- Reduces DOM node count by rendering only visible items
+- Ensures smooth scrolling in Kanban columns
+
+#### Implementation Details
+
+- **Library:** `@tanstack/react-virtual`
+- **Component:** `KanbanColumn`
+- **Strategy:**
+  - Each column uses a virtualized list
+  - Only tasks visible in the viewport (plus overscan) are rendered
+  - Scroll container height is dynamically calculated
+
+#### Benefits
+
+- Better runtime performance
+- Improved user experience for large task datasets
+- Scales efficiently as the number of tasks grows
+
+#### Trade-offs
+
+- Slightly increased implementation complexity
+- Requires careful handling of item heights and scroll containers
+
+This approach ensures the Kanban board remains responsive even with a large number of tasks per column.
+
 ---
 
 ## Technology Stack and Justification
