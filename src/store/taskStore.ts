@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 
 type TaskStore = {
     tasks: Task[];
+    addBulkTasks: (newTasks: Task[]) => void;
     editingTask: Task | null;
     setEditingTask: (next: Task | null | ((prev: Task | null) => Task | null)) => void;
     isFormModalOpen: boolean;
@@ -35,6 +36,12 @@ export const useTaskStore = create<TaskStore>()(
                 const tasks = [...state.tasks, newTask];
                 return { tasks }
             })
+        },
+        addBulkTasks: (tasksData: Task[]) => {
+            set((state) => {
+                const allTasks = [...state.tasks, ...tasksData];
+                return { tasks: allTasks };
+            });
         },
         updateTask: (id, data) => {
             set((state) => {
