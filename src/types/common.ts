@@ -3,10 +3,18 @@ export type TaskPriority = 'low' | 'medium' | 'high' | 'critical';
 export type SortField = "dueDate" | "priority" | "createdAt";
 export type SortOrder = "asc" | "desc";
 export type FilterTaskStatus = TaskStatus | "all";
+export type Theme = "dark" | "light" | "system";
 export type SelectOption = {
     value: string;
     label: string;
 };
+
+export type Count = {
+    all: number;
+    todo: number;
+    "in-progress": number;
+    completed: number;
+}
 
 export type Task = {
     id: string;
