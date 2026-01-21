@@ -14,7 +14,12 @@ export const TaskList = () => {
   return (
     <div className="space-y-3">
       {tasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
+        <TaskItem
+          key={task.id}
+          task={task}
+          onEdit={() => {}}
+          onDeleteOpen={() => {}}
+        />
       ))}
     </div>
   );
